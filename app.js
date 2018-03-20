@@ -6,7 +6,7 @@ const Callback = require('./commands/uptime.js');
 //const Tokyo = require('./commands/Request.js');
 const fs = require('fs');
 
-const TOKEN = '548250899:AAF4AyJ66VROlABe6DJaBcbbhESUTFpsHo4';
+const TOKEN = '';
 const BOT_NAME = 'TokyoMetro_bot';
 
 const request = require("request");
