@@ -1,4 +1,4 @@
-const teleapi = require("node-telegram-bot-api");
+const TelegramApi = require("node-telegram-bot-api");
 const Request = require("sync-request");
 
 
@@ -6,21 +6,19 @@ const Callback = require('./commands/uptime.js');
 //const Tokyo = require('./commands/Request.js');
 const fs = require('fs');
 
-const token = ':';
-const BOT_NAME = 'Tokyobot';
+const TOKEN = '548250899:AAF4AyJ66VROlABe6DJaBcbbhESUTFpsHo4';
+const BOT_NAME = 'TokyoMetro_bot';
 
-var request = require("request");
-var cheer = require('cheerio');
+const request = require("request");
+const cheer = require('cheerio');
 
 const PORT = '80';
 const HOST = '127.0.0.1';
 const TIMEOUT = 1000;
-
-const bot = new teleapi(token, {
+const bot = new TelegramApi(TOKEN, {
   polling: true,
   interval: 100
 });
-
 bot.onText(new RegExp('/tokyo', 'i'), (msg, match) => {
   var start = msg.text.split(" ")[1];
   var end = msg.text.split(" ")[2];
@@ -30,8 +28,6 @@ bot.onText(new RegExp('/tokyo', 'i'), (msg, match) => {
   }
   let url = 'https://www.tokyometro.jp/kr/ticket/search/index.php?ticSearchName01_01=' + start + '&ticSearchName01_02=' + end + "&priority=priTime&day=21&month=201803&hour=0&minute=47&searchOrder=departureTime&fareType=typeAdult&search.x=115&search.y=17";
   request(url, function(error, response, body) {
-
-
     var $ = cheer.load(body);
     var postElements = $("p.stName");
     //  console.log(postElements.contents().data);
@@ -43,14 +39,11 @@ bot.onText(new RegExp('/tokyo', 'i'), (msg, match) => {
         bot.sendMessage(msg.chat.id, "정확한 명령어를 입력하여주세요");
         return;
       }
-
       if (start.toString() == d.data.toString()) {
         str += ",";
       }
-      str += "<b>"+d.data + "</b> -> ";
-
+      str += "<b>" + d.data + "</b> -> ";
     });
-
     try {
       let option = {
         parse_mode: 'html'
@@ -62,8 +55,6 @@ bot.onText(new RegExp('/tokyo', 'i'), (msg, match) => {
       bot.sendMessage(msg.chat.id, "정확한 명령어를 입력하여주세요");
       return;
     }
-    // console.log(mes);
-    // bot.sendMessage(msg.chat.id, mes);
   });
 });
 
