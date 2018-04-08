@@ -1,9 +1,7 @@
 const TelegramApi = require("node-telegram-bot-api");
 const Request = require("sync-request");
 
-
 const Callback = require('./commands/uptime.js');
-//const Tokyo = require('./commands/Request.js');
 const fs = require('fs');
 
 const TOKEN = '';
@@ -30,11 +28,9 @@ bot.onText(new RegExp('/tokyo', 'i'), (msg, match) => {
   request(url, function(error, response, body) {
     var $ = cheer.load(body);
     var postElements = $("p.stName");
-    //  console.log(postElements.contents().data);
     var str = "";
     postElements.contents().each(function() {
       var d = this;
-      //  console.log(d.data);
       if (d.data == null) {
         bot.sendMessage(msg.chat.id, "정확한 명령어를 입력하여주세요");
         return;
